@@ -1,0 +1,36 @@
+[ 
+  { 
+     "command": [
+        "/bin/sh -c \"exec nginx -g 'daemon off;'\""
+     ],
+     "entryPoint": [
+        "sh",
+        "-c"
+     ],
+     "essential": true,
+     "image": "123456789012.dkr.ecr.us-west-2.amazonaws.com/nginx-helloworld:v1",
+     "logConfiguration": { 
+        "logDriver": "awslogs",
+        "options": { 
+           "awslogs-group" : "/ecs/fargate-task-definition",
+           "awslogs-region": "us-east-1",
+           "awslogs-stream-prefix": "ecs"
+        }
+     },
+     "name": "helloworld-fargate-app",
+     "portMappings": [ 
+        { 
+           "containerPort": 80,
+           "hostPort": 80,
+           "protocol": "tcp"
+        }
+     ],
+     "mountPoints": [
+       {
+           "sourceVolume": "helloworld-storage",
+           "containerPath": "/",
+           "readOnly": true
+       }
+   ]
+  }
+]
