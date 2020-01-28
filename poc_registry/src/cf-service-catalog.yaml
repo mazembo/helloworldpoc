@@ -1,0 +1,99 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: AWS SC Multiple SC products and portfolios
+Metadata:
+  'AWS::CloudFormation::Interface':
+    ParameterGroups:
+      - Label:
+          default: Portfolio Information
+        Parameters:
+          - DisplayName
+          - PortfolioDescription
+          - ProviderName
+Parameters:
+  ProviderName:
+    Type: String
+    Description: Portfolio ProviderName
+    Default: Merck Service Catalog PoC
+  PortfolioDescription:
+    Type: String
+    Default: Service Catalog PoC for Merck
+  DisplayName:
+    Type: String
+    Description: Portfolio Name
+    Default: Merck Service Catalog PoC Portfolio
+Resources:
+  ProdAsssNodeRed:
+    Type: 'AWS::ServiceCatalog::PortfolioProductAssociation'
+    DependsOn:
+      - SCsampleport
+      - ScProductNodeRed
+    Properties:
+      AcceptLanguage: en
+      PortfolioId: !Ref SCsampleport
+      ProductId: !Ref ScProductNodeRed
+  ProdAsss:
+    Type: 'AWS::ServiceCatalog::PortfolioProductAssociation'
+    DependsOn:
+      - SCsampleport
+      - ScProductCIP
+    Properties:
+      AcceptLanguage: en
+      PortfolioId: !Ref SCsampleport
+      ProductId: !Ref ScProductCIP
+  ScProductCIP:
+    Type: 'AWS::ServiceCatalog::CloudFormationProduct'
+    Properties:
+      Owner: Merck Team
+      SupportDescription: Support Description
+      Description: Service Catalog product item - CIP
+      Distributor: Merck
+      SupportEmail: awsmp@example.com
+      AcceptLanguage: en
+      SupportUrl: 'https://support.com'
+      Name: CIP
+      ProvisioningArtifactParameters:
+        - Description: CIP VM
+          Info:
+            LoadTemplateFromURL: !Sub >-
+              https://s3.amazonaws.com/terraform-config-${AWS::AccountId}/cip.json
+          Name: V1
+  ScProductNodeRed:
+    Type: 'AWS::ServiceCatalog::CloudFormationProduct'
+    Properties:
+      Owner: MP Team
+      SupportDescription: Support Description
+      Description: Example of node-red app deployed on AWS ECS service
+      Distributor: AWS MP Team Sample
+      SupportEmail: awsmp@example.com
+      AcceptLanguage: en
+      SupportUrl: 'https://support.com'
+      Name: Node-red
+      ProvisioningArtifactParameters:
+        - Description: Node-red
+          Info:
+            LoadTemplateFromURL: !Sub >-
+              https://s3.amazonaws.com/terraform-config-${AWS::AccountId}/node-red.json
+          Name: V1
+  SCsampleport:
+    Type: 'AWS::ServiceCatalog::Portfolio'
+    Properties:
+      ProviderName: !Ref ProviderName
+      Description: !Ref PortfolioDescription
+      DisplayName: !Ref DisplayName
+      AcceptLanguage: en
+  SCprincipalAssociationAmplify:
+    Type: 'AWS::ServiceCatalog::PortfolioPrincipalAssociation'
+    DependsOn:
+      - SCsampleport
+    Properties:
+      PortfolioId: !Ref SCsampleport
+      PrincipalType: 'IAM'
+      PrincipalARN: 'arn:aws:iam::255639296009:role/amplify-service-catalog-master-135522-authRole'
+Outputs:
+  ServiceCatalogUrl:
+    Description: Service Catalog URL
+    Value: !Sub 'https://console.aws.amazon.com/servicecatalog/home'
+  NewPortFolio:
+    Description: Service Catalog Portfolio URL
+    Value: !Sub >-
+      https://console.aws.amazon.com/servicecatalog/home?region=${AWS::Region}#/portfolio/details?portfolioId=${SCsampleport}
