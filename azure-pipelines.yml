@@ -47,9 +47,3 @@ steps:
     templateFile: 'src/cf-service-catalog.yaml'
     logRequest: true
     logResponse: true
-
-trigger:
-- master
-
-pool:
-  vmImage: 'ubuntu-18.04'
