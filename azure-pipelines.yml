@@ -1,7 +1,7 @@
 resources:         
   containers:
   - container: 
-    connection: 
+    connection: dielaisConnection
     image: ubuntu:18.04
 
 trigger:
@@ -9,9 +9,9 @@ trigger:
 
 variables:
   dockerId: 
-  username: 
+  username: mazembo
   imageName: 
-  pswd: 
+  pswd: Nditukulu79
   DockerContainerRegistry: 'dielais'
 
 # Starter pipeline
