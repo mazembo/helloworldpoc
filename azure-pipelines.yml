@@ -1,18 +1,18 @@
 resources:         
   containers:
-  - container: SASIcontainerConnection
-    connection: SASIcontainerConnection
+  - container: 
+    connection: 
     image: ubuntu:18.04
 
 trigger:
 - master
 
 variables:
-  dockerId: sasicontainer
-  username: SASIcontainer
-  imageName: node-testing-container
-  pswd: 143nB50znsWRUugLCk6lq9Z2+Ek3oxnr
-  DockerContainerRegistry: 'SASIcontainerConnection'
+  dockerId: 
+  username: 
+  imageName: 
+  pswd: 
+  DockerContainerRegistry: ''
 
 # Starter pipeline
 steps:
