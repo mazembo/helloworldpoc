@@ -1,0 +1,25 @@
+# Starter pipeline
+steps:
+- task: AWSShellScript@1
+  inputs:
+    awsCredentials: 'AWS-service-catalog'
+    regionName: 'eu-central-1'
+    scriptType: 'inline'
+    inlineScript: |
+      aws s3 sync src/products/ s3://terraform-config-255639296009/
+
+- task: CloudFormationCreateOrUpdateStack@1
+  inputs:
+    awsCredentials: 'AWS-service-catalog'
+    regionName: 'eu-central-1'
+    stackName: 'service-catalog-poc'
+    templateSource: 'file'
+    templateFile: 'src/cf-service-catalog.yaml'
+    logRequest: true
+    logResponse: true
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-18.04'
