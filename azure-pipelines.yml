@@ -1,5 +1,6 @@
 # Starter pipeline
 steps:
+
 - task: AWSShellScript@1
   inputs:
     awsCredentials: 'AWS-service-catalog'
