@@ -12,7 +12,7 @@ variables:
   username: mazembo
   imageName: 
   pswd: Nditukulu79
-  DockerContainerRegistry: 'dielais'
+  DockerContainerRegistry: 'dielaisConnection'
 
 # Starter pipeline
 steps:
