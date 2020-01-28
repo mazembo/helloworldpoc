@@ -1,6 +1,6 @@
 resources:         
   containers:
-  - container: 
+  - container: dielaisConnection
     connection: dielaisConnection
     image: ubuntu:18.04
 
