@@ -1,6 +1,35 @@
+resources:         
+  containers:
+  - container: SASIcontainerConnection
+    connection: SASIcontainerConnection
+    image: ubuntu:18.04
+
+trigger:
+- master
+
+variables:
+  dockerId: sasicontainer
+  username: SASIcontainer
+  imageName: node-testing-container
+  pswd: 143nB50znsWRUugLCk6lq9Z2+Ek3oxnr
+  DockerContainerRegistry: 'SASIcontainerConnection'
+
 # Starter pipeline
 steps:
 
+- task: Docker@2
+  displayName: 'building and pushing the docker container hello-world'
+    # Do NOT push this files because it shall be build with docker buildx for multiarch.
+  inputs:
+    containerRegistry: $(DockerContainerRegistry)
+    repository: helloworldpoc
+    tags: |
+      x64-latest
+      latest
+      $(Build.BuildID)
+    command: buildAndPush
+    buildContext: './'
+    Dockerfile: './Dockerfile'  
 - task: AWSShellScript@1
   inputs:
     awsCredentials: 'AWS-service-catalog'
