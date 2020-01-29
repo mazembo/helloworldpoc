@@ -11,7 +11,7 @@ variables:
   dockerId: 
   username: mazembo
   imageName: 
-  pswd: Nditukulu79
+  pswd:
   DockerContainerRegistry: 'dielaisConnection'
 
 # Starter pipeline
